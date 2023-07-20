@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <style>
+        img{
+        max-width:180px;
+        }
+        input[type=file]{
+        padding:10px;
+        background:#2d2d2d;}
+    </style>
+
+</head>
+<body>
+    <p>&copy; by Garpepi - papipepi.com</p>
+    <input type='file' onchange="readURL(this);" multiple/>
+    <br>
+    <br>
+    <div id="here">
+        
+    </div>
+    
+    <script src="jquery-3.6.4.slim.min.js"></script>
+    <script>
+        function readURL(input) {
+            console.log(input.files)
+            var tmpImage = [];
+            var tmp = [];
+            Array.prototype.forEach.call(input.files, function(element) {
+                var reader = new FileReader();
+                console.log(element);
+
+                reader.onload = function (e) {                    
+                    tmpImage.push([element.name, e.target.result]);
+                    var tmp = tmpImage.sort(sortFunction);
+                    console.log(tmp);
+                    $('#here').empty();
+                    tmp.forEach(addImage);
+                    // $('#here').append('<img src='+e.target.result+' width=100 />');
+                    // $('#blah')
+                    //     .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(element);
+            });
+        }
+
+        function sortFunction(a, b) {
+            if (a[0] === b[0]) {
+                return 0;
+            }
+            else {
+                return (a[0] < b[0]) ? -1 : 1;
+            }
+        }
+
+        function addImage(element) {
+            $('#here').append('<img src='+element[1]+' width=200 />');
+        }
+    </script>
+</body>
+
+</html>
